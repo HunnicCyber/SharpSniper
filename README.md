@@ -8,7 +8,7 @@ SharpSniper is a simple tool to find the IP address of these users so that you c
 
 It requires that you have privileges to read logs on Domain Controllers.
 
-First it queries and makes a list of Domain contollers, then search for Log-on events on any of the DCs from the user you are looking for and then reads the most recent 1 IP address.
+First it queries and makes a list of Domain contollers, then search for Log-on events on any of the DCs for the user you are looking for and then reads the most recent DHCP allocated logon IP address.
 
 ## Usage 
 
