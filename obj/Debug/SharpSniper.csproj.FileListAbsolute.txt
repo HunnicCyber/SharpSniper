@@ -1,0 +1,7 @@
+C:\Users\tomka\source\repos\SharpSniper\bin\Debug\SharpSniper.exe
+C:\Users\tomka\source\repos\SharpSniper\bin\Debug\SharpSniper.pdb
+C:\Users\tomka\source\repos\SharpSniper\obj\Debug\SharpSniper.csprojAssemblyReference.cache
+C:\Users\tomka\source\repos\SharpSniper\obj\Debug\SharpSniper.csproj.CoreCompileInputs.cache
+C:\Users\tomka\source\repos\SharpSniper\obj\Debug\SharpSniper.exe
+C:\Users\tomka\source\repos\SharpSniper\obj\Debug\SharpSniper.pdb
+C:\Users\tomka\source\repos\SharpSniper\bin\Debug\SharpSniper.exe.config
