@@ -20,7 +20,7 @@ User: emusk - IP Address: 192.168.37.130
 ```
 Cobalt Strike
 ```
-> execute-assembly /path/to/SharpSniper.exe DomainAdminUser DAPass123
+> execute-assembly /path/to/SharpSniper.exe emusk DomainAdminUser DAPass123
 
 User: emusk - IP Address: 192.168.37.130
 ```
