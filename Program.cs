@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.DirectoryServices.ActiveDirectory;
 using System.Text.RegularExpressions;
@@ -9,12 +9,13 @@ namespace SharpSniper
     {
         static void Main(string[] args) 
         {
-            if (args.Length < 3 || args.Length > 3)
+            if (args.Length != 3 && args.Length != 1)
             {
-                System.Console.WriteLine("\r\n\r\nSniper: Find hostname and IP address of specific user (CEO etc) in Domain (requires Domain Admin Credentials or DC Event" +
+                System.Console.WriteLine("\r\n\r\nSniper: Find hostname and IP address of specific user (CEO etc) in Domain (requires Domain Admin Rights or DC Event" +
                     "logs must be readable by your user.");
-                System.Console.WriteLine("");
-                System.Console.WriteLine("Usage: Sniper.exe TARGET_USERNAME DAUSER DAPASSWORD");
+                System.Console.WriteLine("Usage:");
+                System.Console.WriteLine("Credentialed Auth:   Sniper.exe TARGET_USERNAME DAUSER DAPASSWORD");
+                System.Console.WriteLine("Process Token Auth:  Sniper.exe TARGET_USERNAME");
                 System.Environment.Exit(1);
             }
 
@@ -22,16 +23,18 @@ namespace SharpSniper
             string dauser = String.Empty;
             string dapass = String.Empty;
 
+            bool credentialed = false;
+
+            targetusername = args[0];
 
             if (args.Length == 3)
             {
-                targetusername = args[0];
+                credentialed = true;
                 dauser = args[1];
                 dapass = args[2];
             }
 
             string domain_name = DomainInformation.GetDomainOrWorkgroup();
-
 
             Domain domain = Domain.GetCurrentDomain();
 
@@ -45,7 +48,9 @@ namespace SharpSniper
             foreach (string dcfound in dclist)
             {
                 string target_hostname = string.Empty;
-                target_hostname = QueryDC.QueryRemoteComputer(targetusername, domain_name, dcfound, dauser, dapass);
+                target_hostname = credentialed ?
+                                    QueryDC.QueryRemoteComputer(targetusername, domain_name, dcfound, dauser, dapass) :
+                                    QueryDC.QueryRemoteComputer(targetusername, domain_name, dcfound);
                 Regex ip = new Regex(@"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b");
                 MatchCollection result = ip.Matches(target_hostname);
                 {
