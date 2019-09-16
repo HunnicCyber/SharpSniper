@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.Eventing.Reader;
 using System.Security;
 
@@ -6,23 +6,42 @@ namespace SharpSniper
 {
     class QueryDC
     {
-
-        public static string QueryRemoteComputer(string username, string domain, string dc, string dauser, string dapass)
+        public static string QueryRemoteComputer(string username, string domain,
+            string dc, string dauser = "", string dapass = "")
         {
-            string queryString = "*[System[(EventID=4624)] and EventData[Data[@Name='TargetUserName']='" + username + "']]"; // XPATH Query
-            SecureString pw = GetPassword(dapass);
+            bool credentialed = true;
+            if (dauser == string.Empty && dapass == string.Empty)
+                credentialed = false;
 
-            EventLogSession session = new EventLogSession(
-                dc,                               // Remote Computer
-                domain,                                  // Domain
-                dauser,                                // Username
-                pw,
-                SessionAuthentication.Default);
+            string queryString = 
+                "*[System[(EventID=4624)] and " +
+                    "EventData[Data[@Name='TargetUserName']='" + 
+                    username + "']]"; // XPATH Query
 
-            pw.Dispose();
+            EventLogSession session;
 
+            if (credentialed)
+            {
+                SecureString pw = GetPassword(dapass);
+
+                session = new EventLogSession
+                (
+                        dc,                               // Remote Computer
+                        domain,                                  // Domain
+                        dauser,                                // Username
+                        pw,
+                        SessionAuthentication.Default
+                );
+                pw.Dispose();
+            }
+            else
+            {
+                session = new EventLogSession(dc); // Remote Computer
+            }
+              
             // Query the Application log on the remote computer.
-            EventLogQuery query = new EventLogQuery("Security", PathType.LogName, queryString);
+            EventLogQuery query = new EventLogQuery("Security", PathType.LogName, 
+                queryString);
             query.Session = session;
             EventLogReader reader = new EventLogReader(query);
             EventRecord eventRecord;
