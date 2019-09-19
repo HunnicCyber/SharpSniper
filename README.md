@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-Often a Red Team engagement is more than just acheiving Domain Admin. Some clients will want to see if specific users in the domain can be compromised, for example the CEO.
+Often a Red Team engagement is more than just achieving Domain Admin. Some clients will want to see if specific users in the domain can be compromised, for example the CEO.
 
 SharpSniper is a simple tool to find the IP address of these users so that you can target their box.
 
