@@ -38,3 +38,7 @@ Cobalt Strike (Beacon's token)
 
 User: emusk - IP Address: 192.168.37.130
 ```
+
+## Author
+
+Tom Kallo
